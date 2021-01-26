@@ -131,14 +131,21 @@ if(UNIX AND NOT (DEFINED ENV{CXXFLAGS} OR CMAKE_CXX_FLAGS))
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-unused-parameter")
 	# But treat likely errors as actual errors
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=missing-field-initializers -Werror=ignored-qualifiers -Werror=delete-non-virtual-dtor -Werror=unused-value")
+	# Link the C++ runtime statically to ensure portable binary
+	target_link_options(${PROJECT_NAME}
+		PUBLIC
+			"-static-libstdc++"
+			"-static-libgcc"
+	)
 endif()
 
 if(MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Gy /Oi /MP /GS- /W3 /permissive- /w24458 /w34456 /w24702")
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /CGTHREADS:8 /PROFILE")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Ob2")
-	set_target_properties(${PROJECT_NAME} PROPERTIES
-		LINK_FLAGS /SUBSYSTEM:WINDOWS
+	target_link_options(${PROJECT_NAME}
+		PUBLIC
+			/SUBSYSTEM:WINDOWS
 	)
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 endif()
