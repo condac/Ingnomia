@@ -263,9 +263,9 @@ void GameManager::postCreationInit()
 
 	connect( m_game, &Game::signalTimeAndDate, m_eventConnector, &EventConnector::onTimeAndDate );
 	connect( m_game, &Game::signalKingdomInfo, m_eventConnector, &EventConnector::onKingdomInfo );
-	
-	connect( m_game->sm(), &SoundManager::signalPlayEffect, m_eventConnector->aggregatorSound(), &AggregatorSound::onPlayEffect, Qt::QueuedConnection );
+	connect( m_game, &Game::signalHeartbeat, m_eventConnector, &EventConnector::onHeartbeat );
 
+	connect( m_game->sm(), &SoundManager::signalPlayEffect, m_eventConnector->aggregatorSound(), &AggregatorSound::onPlayEffect, Qt::QueuedConnection );
 	
 	Global::util->initAllowedInContainer();
 	m_eventConnector->onViewLevel( GameState::viewLevel );
@@ -349,6 +349,13 @@ void GameManager::setPaused( bool value )
 			m_game->setPaused( value );
 			m_eventConnector->emitPause( value );
 		}
+	}
+}
+void GameManager::setHeartbeatResponse( int value )
+{
+	if( m_game )
+	{
+		m_game->setHeartbeatResponse( value );
 	}
 }
 
