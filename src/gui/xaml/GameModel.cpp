@@ -285,16 +285,18 @@ GameModel::GameModel()
 	setShowTileInfo( 0 );
 }
 
-void GameModel::updateKingdomInfo( QString name, QString info1, QString info2, QString info3 )
+void GameModel::updateKingdomInfo( QString name, QString info1, QString info2, QString info3, QString info4 )
 {
 	m_kingdomName = name.toStdString().c_str();
 	m_kingdomInfo1 = info1.toStdString().c_str();
 	m_kingdomInfo2 = info2.toStdString().c_str();
 	m_kingdomInfo3 = info3.toStdString().c_str();
+	m_kingdomInfo4 = info4.toStdString().c_str();
 	OnPropertyChanged( "KingdomName" );
 	OnPropertyChanged( "KingdomInfo1" );
 	OnPropertyChanged( "KingdomInfo2" );
 	OnPropertyChanged( "KingdomInfo3" );
+	OnPropertyChanged( "KingdomInfo4" );
 }
 
 void GameModel::setTimeAndDate( int minute, int hour, int day, QString season, int year, QString sunStatus )
@@ -471,6 +473,11 @@ const char* GameModel::getKingdomInfo2() const
 const char* GameModel::getKingdomInfo3() const
 {
 	return m_kingdomInfo3.Str();
+}
+
+const char* GameModel::getKingdomInfo4() const
+{
+	return m_kingdomInfo4.Str();
 }
 
 const char* GameModel::getTimeImagePath() const
@@ -1382,6 +1389,7 @@ NS_IMPLEMENT_REFLECTION( GameModel, "IngnomiaGUI.GameModel" )
 	NsProp( "KingdomInfo1", &GameModel::getKingdomInfo1 );
 	NsProp( "KingdomInfo2", &GameModel::getKingdomInfo2 );
 	NsProp( "KingdomInfo3", &GameModel::getKingdomInfo3 );
+	NsProp( "KingdomInfo4", &GameModel::getKingdomInfo4 );
 
 	NsProp( "RenderDesignations", &GameModel::getRenderDesignations, &GameModel::setRenderDesignations );
 	NsProp( "RenderJobs", &GameModel::getRenderJobs, &GameModel::setRenderJobs );

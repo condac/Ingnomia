@@ -100,11 +100,11 @@ void ProxyGameView::onTimeAndDate( int minute, int hour, int day, QString season
 	}
 }
 
-void ProxyGameView::onKingdomInfo( QString name, QString info1, QString info2, QString info3 )
+void ProxyGameView::onKingdomInfo( QString name, QString info1, QString info2, QString info3, QString info4 )
 {
 	if( m_parent )
 	{
-		m_parent->updateKingdomInfo( name, info1, info2, info3 );
+		m_parent->updateKingdomInfo( name, info1, info2, info3, info4 );
 	}
 }
 

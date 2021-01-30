@@ -50,12 +50,14 @@
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 						<TextBlock Grid.Row="0"  FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding KingdomName}" />
 						<TextBlock Grid.Row="1"  FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding KingdomInfo1}" />
 						<TextBlock Grid.Row="2"  FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding KingdomInfo2}" />
 						<TextBlock Grid.Row="3"  FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding KingdomInfo3}" />
-						<TextBlock Grid.Row="4"  FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Level}" />
+						<TextBlock Grid.Row="4"  FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding KingdomInfo4}" />
+						<TextBlock Grid.Row="5"  FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Level}" />
 					</Grid>
 				</Border>
 				<Border Grid.Row="1" Style="{StaticResource Panel}">

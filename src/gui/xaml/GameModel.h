@@ -181,7 +181,7 @@ public:
 	GameModel();
 
 	void setTimeAndDate( int minute, int hour, int day, QString season, int year, QString sunStatus );
-	void updateKingdomInfo( QString name, QString info1, QString info2, QString info3 );
+	void updateKingdomInfo( QString name, QString info1, QString info2, QString info3, QString info4 );
 	void setViewLevel( int level );
 	void updatePause( bool value );
 	void updateGameSpeed( GameSpeed speed );
@@ -224,6 +224,7 @@ private:
 	const char* getKingdomInfo1() const;
 	const char* getKingdomInfo2() const;
 	const char* getKingdomInfo3() const;
+	const char* getKingdomInfo4() const;
 
 
 	bool getRenderDesignations() const;
@@ -314,6 +315,7 @@ private:
 	Noesis::String m_kingdomInfo1;
 	Noesis::String m_kingdomInfo2;
 	Noesis::String m_kingdomInfo3;
+	Noesis::String m_kingdomInfo4;
 
 	bool m_paused = false;
 	GameSpeed m_gameSpeed = GameSpeed::Normal;

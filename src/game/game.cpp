@@ -265,7 +265,9 @@ void Game::loop()
 		emit signalKingdomInfo( GameState::kingdomName, 
 			"Gnomes: " + QString::number( gm()->numGnomes() ), 
 			"Animals: " + QString::number( fm()->countAnimals() ),
-			"Items: "  + QString::number( inv()->numItems() ) );
+			"Items: "  + QString::number( inv()->numItems() ),
+			"Value: "  + QString::number( inv()->kingdomWealth() ) );
+
 
 		m_guiHeartbeat = m_guiHeartbeat + 1;
 		emit signalHeartbeat(m_guiHeartbeat);

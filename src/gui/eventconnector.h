@@ -150,7 +150,7 @@ public slots:
 	void onWindowSize( int w, int h );
 
 	void onTimeAndDate( int minute, int hour, int day, QString season, int year, QString sunStatus );
-	void onKingdomInfo( QString name, QString info1, QString info2, QString info3 );
+	void onKingdomInfo( QString name, QString info1, QString info2, QString info3, QString info4 );
 	void onViewLevel( int level );
 	
 	void onHeartbeat( int value);
@@ -193,7 +193,7 @@ signals:
 	void signalExit();
 	void signalWindowSize( int w, int h );
 	void signalTimeAndDate( int minute, int hour, int day, QString season, int year, QString sunStatus );
-	void signalKingdomInfo( QString name, QString info1, QString info2, QString info3 );
+	void signalKingdomInfo( QString name, QString info1, QString info2, QString info3, QString info4 );
 	void signalViewLevel( int level );
 	void signalUpdatePause( bool paused );
 	void signalUpdateGameSpeed( GameSpeed speed );

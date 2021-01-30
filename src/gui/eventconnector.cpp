@@ -94,9 +94,9 @@ void EventConnector::onTimeAndDate( int minute, int hour, int day, QString seaso
 	emit signalTimeAndDate( minute, hour, day, season, year, sunStatus );
 }
 
-void EventConnector::onKingdomInfo( QString name, QString info1, QString info2, QString info3 )
+void EventConnector::onKingdomInfo( QString name, QString info1, QString info2, QString info3, QString info4 )
 {
-	emit signalKingdomInfo( name, info1, info2, info3 );
+	emit signalKingdomInfo( name, info1, info2, info3, info4 );
 }
 
 void EventConnector::onHeartbeat( int value)
