@@ -66,7 +66,7 @@ Game::Game( QObject* parent ) :
 {
 	qDebug() << "init game...";
 	
-	m_fpstimer.start();
+	m_upsTimer.start();
 
 	m_sf.reset( new SpriteFactory() );
 	
@@ -178,23 +178,26 @@ void Game::loop()
 {
 	QElapsedTimer timer;
 	timer.start();
-	if (m_guiHeartbeat <= m_guiHeartbeatResponse+10)
-	{	
-		m_fpscounter1++;
-		if ( m_fpstimer.elapsed() > 1000 ) 
+	if (m_guiHeartbeat <= m_guiHeartbeatResponse+20)
+	{
+		m_upsCounter1++;
+		if ( m_upsTimer.elapsed() > 1000 ) 
 		{
-			m_fpstimer.restart();
-			//printf(" gameloop fps %d\n", m_fpscounter1);
-			m_fpscounter1 = 0;
+			m_upsTimer.restart();
+			//printf(" gameloop ups %d avg ms %d\n", m_upsCounter1, m_avgLoopTime/m_upsCounter1);
+			m_upsCounter = m_upsCounter1;
+			m_upsCounter1 = 0;
+			m_avgLoopTime = 0;
 		}
-		
-		emit sendOverlayMessage( 6, "tick " + QString::number( GameState::tick ) );
-		//printf("   game tick %d\n",GameState::tick );
-		
 		int ms2 = 0;
 		
 		if ( !m_paused )
 		{
+			
+			
+			emit sendOverlayMessage( 6, "tick " + QString::number( GameState::tick ) );
+			//printf("   game tick %d\n",GameState::tick );
+			
 			sendClock();
 
 			// process grass
@@ -233,11 +236,11 @@ void Game::loop()
 			++GameState::tick;
 		}
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//
-	// update gui
-	//
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//
+		// update gui
+		//
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	
 		auto updates = m_world->updatedTiles();
@@ -265,36 +268,15 @@ void Game::loop()
 		emit signalKingdomInfo( GameState::kingdomName, 
 			"Gnomes: " + QString::number( gm()->numGnomes() ), 
 			"Animals: " + QString::number( fm()->countAnimals() ),
-			"Items: "  + QString::number( inv()->numItems() ),
+			"Items: "  + QString::number( inv()->numItems() ) );
 			"Value: "  + QString::number( inv()->kingdomWealth() ) );
-
 
 		m_guiHeartbeat = m_guiHeartbeat + 1;
 		emit signalHeartbeat(m_guiHeartbeat);
 	}
 
-	int looptime = timer.elapsed();
-	int sleep = m_millisecondsSlow;
-	if (m_paused) 
-	{
-		m_timer->start( m_millisecondsSlow*2 );
-	}
-	else {
-		
-		switch( m_gameSpeed )
-		{
-			case GameSpeed::Normal:
-				sleep = m_millisecondsSlow - looptime;
-				break;
-			case GameSpeed::Fast:
-				sleep = m_millisecondsFast - looptime;
-				break;
-		}
-		if (sleep <0) {
-			sleep = 0;
-		}
-		m_timer->start( sleep );
-	}
+	
+	m_avgLoopTime += timer.elapsed();
 	
 }
 
@@ -504,6 +486,15 @@ GameSpeed Game::gameSpeed()
 void Game::setGameSpeed( GameSpeed speed )
 {
 	m_gameSpeed = speed;
+	switch( m_gameSpeed )
+	{
+		case GameSpeed::Normal:
+			m_timer->setInterval( m_millisecondsSlow );
+			break;
+		case GameSpeed::Fast:
+			m_timer->setInterval( m_millisecondsFast );
+			break;
+	}
 }
 
 bool Game::paused()
@@ -514,6 +505,27 @@ bool Game::paused()
 void Game::setPaused( bool value )
 {
 	m_paused = value;
+	if (m_paused) 
+	{
+		m_timer->setInterval( m_millisecondsSlow*2 );
+	}
+	else {
+		switch( m_gameSpeed )
+		{
+			case GameSpeed::Normal:
+				m_timer->setInterval( m_millisecondsSlow );
+				break;
+			case GameSpeed::Fast:
+				m_timer->setInterval( m_millisecondsFast );
+				break;
+		}
+	}
+	
+}
+void Game::setHeartbeatResponse( int value )
+{
+	//printf("heartbeatresponse %d", value);
+	m_guiHeartbeatResponse = value;
 }
 void Game::setHeartbeatResponse( int value )
 {

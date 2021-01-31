@@ -117,8 +117,10 @@ private:
 
 	QPointer<QTimer> m_timer;
 	
-	QElapsedTimer m_fpstimer;
-	int m_fpscounter1;
+	QElapsedTimer m_upsTimer;
+	int m_upsCounter;
+	int m_upsCounter1;
+	int m_avgLoopTime;
 
 	int m_millisecondsSlow = 50;
 	int m_millisecondsFast = 5;
