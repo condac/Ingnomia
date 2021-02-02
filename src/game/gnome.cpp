@@ -1047,7 +1047,7 @@ bool Gnome::attack( DamageType dt, AnatomyHeight da, int skill, int strength, Po
 	if ( dodge > skill )
 	{
 		int diff = dodge - skill;
-		diff     = qMax( 5, 20 - diff );
+		diff     = qMax( 5, Global::xpMaxLevel - diff );
 		hit |= rand() % 100 > diff;
 	}
 

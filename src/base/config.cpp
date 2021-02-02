@@ -66,6 +66,10 @@ Config::Config()
 	{
 		m_settings.insert( "XpMod", 250. );
 	}
+	if ( !m_settings.contains( "XpMaxLevel" ) )
+	{
+		m_settings.insert( "XpMaxLevel", 100. );
+	}
 
 	if ( !m_settings.contains( "fow" ) )
 	{

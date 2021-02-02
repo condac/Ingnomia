@@ -61,6 +61,7 @@ int Global::dimZ     = 100;
 int Global::zWeight = 20;
 
 double Global::xpMod = 250.;
+int Global::xpMaxLevel = 100;
 
 bool Global::debugMode = false;
 bool Global::debugOpenGL = false;
@@ -85,6 +86,7 @@ void Global::reset()
 	GameState::squads.clear();
 
 	Global::xpMod = Global::cfg->get( "XpMod" ).toDouble();
+	Global::xpMaxLevel = Global::cfg->get( "XpMaxLevel" ).toInt();
 
 	m_logger.reset();
 

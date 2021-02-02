@@ -1661,7 +1661,7 @@ BT_RESULT Gnome::actionWork( bool halt )
 			float current   = Global::util->reverseFib( m_skills.value( skillID ).toUInt() );
 			float ticks     = getDurationTicks( m_currentTask.value( "Duration" ), m_job );
 
-			ticks                = qMax( 10., qMin( 1000., ticks - ( ( ticks / 20. ) * current ) ) );
+			ticks                = qMax( 10., qMin( 1000., ticks - ( ( ticks / (double)Global::xpMaxLevel ) * current ) ) );
 			m_taskFinishTick     = GameState::tick + ticks;
 			m_totalDurationTicks = ticks;
 		}
@@ -1706,7 +1706,7 @@ BT_RESULT Gnome::actionWork( bool halt )
 			float ticks     = getDurationTicks( m_currentTask.value( "Duration" ), m_job );
 			if ( ticks > 0 )
 			{
-				ticks = qMax( 10., qMin( 1000., ticks - ( ( ticks / 20. ) * current ) ) );
+				ticks = qMax( 10., qMin( 1000., ticks - ( ( ticks / (double)Global::xpMaxLevel ) * current ) ) );
 			}
 			m_taskFinishTick     = GameState::tick + ticks;
 			m_totalDurationTicks = ticks;
@@ -2086,7 +2086,7 @@ BT_RESULT Gnome::actionAttackTarget( bool halt )
 					Global::logger().log( LogType::COMBAT, m_name + " attacks " + creature->name(), m_id );
 					// attack with main hand
 					creature->attack( DT_SLASH, m_anatomy.randomAttackHeight(), m_rightHandAttackSkill, m_rightHandAttackValue, m_position, m_id );
-					m_rightHandCooldown = qMax( 5, 20 - m_rightHandAttackSkill );
+					m_rightHandCooldown = qMax( 5, Global::xpMaxLevel - m_rightHandAttackSkill );
 					m_globalCooldown    = 5;
 				}
 				else if ( m_leftHandCooldown <= 0 )
@@ -2096,7 +2096,7 @@ BT_RESULT Gnome::actionAttackTarget( bool halt )
 					{
 						Global::logger().log( LogType::COMBAT, m_name + " attacks " + creature->name(), m_id );
 						creature->attack( DT_SLASH, m_anatomy.randomAttackHeight(), m_leftHandAttackSkill, m_leftHandAttackValue, m_position, m_id );
-						m_leftHandCooldown = qMax( 5, 20 - m_leftHandAttackSkill );
+						m_leftHandCooldown = qMax( 5, Global::xpMaxLevel - m_leftHandAttackSkill );
 						m_globalCooldown   = 5;
 					}
 				}
@@ -2108,7 +2108,7 @@ BT_RESULT Gnome::actionAttackTarget( bool halt )
 					Global::logger().log( LogType::COMBAT, m_name + " punches " + creature->name(), m_id );
 					// attack with main hand
 					creature->attack( DT_BLUNT, m_anatomy.randomAttackHeight(), m_rightHandAttackSkill, m_rightHandAttackValue, m_position, m_id );
-					m_rightHandCooldown = qMax( 5, 20 - m_rightHandAttackSkill );
+					m_rightHandCooldown = qMax( 5, Global::xpMaxLevel - m_rightHandAttackSkill );
 					m_globalCooldown    = 5;
 				}
 				else if ( m_leftHandCooldown <= 0 )
@@ -2116,7 +2116,7 @@ BT_RESULT Gnome::actionAttackTarget( bool halt )
 					// wielding an offhand weapon?
 					Global::logger().log( LogType::COMBAT, m_name + " punches " + creature->name(), m_id );
 					creature->attack( DT_BLUNT, m_anatomy.randomAttackHeight(), m_leftHandAttackSkill, m_leftHandAttackValue, m_position, m_id );
-					m_leftHandCooldown = qMax( 5, 20 - m_leftHandAttackSkill );
+					m_leftHandCooldown = qMax( 5, Global::xpMaxLevel - m_leftHandAttackSkill );
 					m_globalCooldown   = 5;
 				}
 			}

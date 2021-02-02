@@ -66,6 +66,7 @@ public:
 	static int dimZ;
 	static int zWeight;
 	static double xpMod;
+	static int xpMaxLevel;
 	static bool debugMode;
 	static bool debugOpenGL;
 

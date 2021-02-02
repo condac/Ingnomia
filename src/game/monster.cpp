@@ -308,7 +308,7 @@ BT_RESULT Monster::actionAttackTarget( bool halt )
 			int skill    = getSkillLevel( "Unarmed" );
 			int strength = attribute( "Str" );
 			creature->attack( DT_BLUNT, m_anatomy.randomAttackHeight(), skill, qMin( 5, strength ), m_position, m_id );
-			m_rightHandCooldown = qMax( 5, 20 - m_rightHandAttackSkill );
+			m_rightHandCooldown = qMax( 5, Global::xpMaxLevel - m_rightHandAttackSkill );
 		}
 		return BT_RESULT::RUNNING;
 	}

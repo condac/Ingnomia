@@ -545,7 +545,7 @@ unsigned int Util::reverseFib( unsigned int number )
 	double num = (double)number / Global::xpMod;
 
 	//n(F) = Floor[ Log(F Sqrt(5) + 1/2)/Log(Phi)]
-	return floor( log( num * 2.2360679775 + 0.5 ) / log( 1.6180339887 ) );
+	return floor( log( num * 2.2360679775 + 0.5 ) / log( 1.6180339887 ) * (Global::xpMaxLevel/20) ) ;
 }
 
 Position Util::reachableBorderPos( Position fromPos, bool& found )
