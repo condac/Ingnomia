@@ -134,7 +134,6 @@ void AggregatorSound::onPlayNotify( QVariantMap effect)
 			soundID = soundID + soundMaterial;
 		}
 		else {
-			
 			if (Global::debugSound)
 			{
 				QString mat = soundID+soundMaterial;
@@ -148,7 +147,7 @@ void AggregatorSound::onPlayNotify( QVariantMap effect)
 		m_effects[soundID]->play();
 		if (Global::debugSound)
 		{
-			qDebug() << "playing sound " << soundID << " v " << volume;
+			qDebug() << "playing sound " << soundID << " v ";
 		}
 
 	}
