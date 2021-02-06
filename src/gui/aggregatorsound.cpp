@@ -39,10 +39,13 @@ AggregatorSound::AggregatorSound( QObject* parent ) :
 	m_effects.clear();
 	//sf::SoundBuffer buffer;
 	QString exePath = QCoreApplication::applicationDirPath();
-	QString filename = exePath + "/content/audio/wood1.wav";
 	
-	filename = QDir::toNativeSeparators(filename);
-	m_buffer.loadFromFile(filename.toStdString());
+	QFile file( exePath + "/content/audio/wood1.wav" );
+	file.open( QIODevice::ReadOnly );
+	auto ba = file.readAll();
+	file.close();
+
+	m_buffer.loadFromMemory( ba.data(), ba.size() );
 	m_sound.setBuffer(m_buffer);
 	m_sound.play();
 	
@@ -65,14 +68,17 @@ void AggregatorSound::init( Game* game )
 	{
 		
 		QString soundID = sound.value( "ID" ).toString()+"."+sound.value( "Material" ).toString();
-		
 		QString exePath = QCoreApplication::applicationDirPath();
 		QString filename = exePath + "/content/audio/" + sound.value( "SoundFile" ).toString();
 		
-		filename = QDir::toNativeSeparators(filename);
-		
+		QFile file( filename );
+		file.open( QIODevice::ReadOnly );
+		auto ba = file.readAll();
+		file.close();
+
 		sf::SoundBuffer* buffer = new sf::SoundBuffer();
-		if (!buffer->loadFromFile(filename.toStdString()))
+		
+		if (!buffer->loadFromMemory( ba.data(), ba.size() ) )
 		{
 			qDebug() << "unable to load sound" << soundID << " " << filename;
 		}
@@ -85,8 +91,9 @@ void AggregatorSound::init( Game* game )
 		}
 
 	}
-
 }
+
+
 void AggregatorSound::onPlayEffect( QVariantMap effect)
 {
 	m_volume = Global::cfg->get( "AudioMasterVolume" ).toFloat();
